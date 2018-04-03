@@ -1,11 +1,10 @@
-package com.cgi.cns.refapp.refappaccountjava;
+package com.cgi.cns.refapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@EnableEurekaClient
+@EnableDiscoveryClient
 @SpringBootApplication
 public class RefappAccountJavaApplication {
 

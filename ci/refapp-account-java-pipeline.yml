@@ -1,0 +1,46 @@
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+
+resources:
+# source code for the pipeline scripts
+- name: refapp-account-java
+  type: git
+  source:
+    uri: https://github.com/ECSTeam/refapp-account-java.git
+    private_key: ((github_private_key))
+
+#- name: slack-alert
+#  type: slack-notification
+#  source:
+#    url: https://hooks.slack.com/services/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
+
+jobs:
+# refapp-account app pipeline
+- name: compile-refapp-account
+  max_in_flight: 1
+  plan:
+  - get: refapp-account-java
+    trigger: true
+  - task: compile
+    file: refapp-account-java/ci/tasks/refapp-account/compile/task.yml
+
+- name: cf-push-refapp-account
+  serial: true
+  max_in_flight: 1
+  plan:
+  - get: refapp-account-java
+    passed: [compile-refapp-account]
+    trigger: true
+  - task: cf-push
+    file: refapp-account-java/ci/tasks/refapp-account/cf-push/task.yml
+    attempts: 2
+    params:
+      CF_API: ((CF_API))
+      CF_API_USER: ((CF_API_USER))
+      CF_API_PASSWORD: ((CF_API_PASSWORD))
+      CF_ORG: ((CF_ORG))
+      CF_SPACE: ((CF_SPACE))

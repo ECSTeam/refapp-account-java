@@ -1,0 +1,11 @@
+github_private_key: |
+  -----BEGIN RSA PRIVATE KEY-----
+  -----END RSA PRIVATE KEY-----
+
+#cf parameters
+CF_API: change-me
+CF_API_USER: change-me
+CF_API_PASSWORD: change-me
+APPS_DOMAIN_NAME: change-me
+
+APP_NAME: refapp-account-java
