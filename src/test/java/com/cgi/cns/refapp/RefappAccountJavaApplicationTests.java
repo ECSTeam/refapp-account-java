@@ -1,4 +1,4 @@
-package com.cgi.cns.refapp.refappaccountjava;
+package com.cgi.cns.refapp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
