@@ -6,7 +6,7 @@ platform: linux
 #    repository: cnsadmin/struts-example
 #    tag: latest
 inputs:
-  #- name: refapp-account-java
+  - name: refapp-account-java
   - name: refapp-account-java-release
 run:
   path: refapp-account-java/ci/tasks/refapp-account/cf-push/task.sh
