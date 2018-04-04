@@ -1,11 +1,16 @@
+
 github_private_key: |
   -----BEGIN RSA PRIVATE KEY-----
   -----END RSA PRIVATE KEY-----
+# s3 parameters to store build artifacts
+AWS_REGION_NAME: change-me
+S3_ENDPOINT: change-me
+AWS_ACCESS_KEY: change-me
+AWS_SECRET_KEY: change-me
+S3_BUCKET: change-me
 
 #cf parameters
 CF_API: change-me
 CF_API_USER: change-me
 CF_API_PASSWORD: change-me
 APPS_DOMAIN_NAME: change-me
-
-APP_NAME: refapp-account-java

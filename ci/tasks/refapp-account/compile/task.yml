@@ -1,0 +1,13 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: maven
+    tag: latest
+inputs:
+- name: refapp-account-java
+outputs:
+- name: refapp-account-java-release
+run:
+  path: refapp-account-java/ci/tasks/refapp-account/compile/task.sh

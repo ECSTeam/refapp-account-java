@@ -1,9 +1,9 @@
 resource_types:
-- name: slack-notification
-  type: docker-image
-  source:
-    repository: cfcommunity/slack-notification-resource
-    tag: latest
+#- name: slack-notification
+#  type: docker-image
+#  source:
+#    repository: cfcommunity/slack-notification-resource
+#    tag: latest
 
 resources:
 # source code for the pipeline scripts
@@ -28,19 +28,19 @@ jobs:
   - task: compile
     file: refapp-account-java/ci/tasks/refapp-account/compile/task.yml
 
-- name: cf-push-refapp-account
-  serial: true
-  max_in_flight: 1
-  plan:
-  - get: refapp-account-java
-    passed: [compile-refapp-account]
-    trigger: true
-  - task: cf-push
-    file: refapp-account-java/ci/tasks/refapp-account/cf-push/task.yml
-    attempts: 2
-    params:
-      CF_API: ((CF_API))
-      CF_API_USER: ((CF_API_USER))
-      CF_API_PASSWORD: ((CF_API_PASSWORD))
-      CF_ORG: ((CF_ORG))
-      CF_SPACE: ((CF_SPACE))
+#- name: cf-push-refapp-account
+#  serial: true
+#  max_in_flight: 1
+#  plan:
+#  - get: refapp-account-java
+#    passed: [compile-refapp-account]
+#    trigger: true
+#  - task: cf-push
+#    file: refapp-account-java/ci/tasks/refapp-account/cf-push/task.yml
+#    attempts: 2
+#    params:
+#      CF_API: ((CF_API))
+#      CF_API_USER: ((CF_API_USER))
+#      CF_API_PASSWORD: ((CF_API_PASSWORD))
+#      CF_ORG: ((CF_ORG))
+#      CF_SPACE: ((CF_SPACE))
