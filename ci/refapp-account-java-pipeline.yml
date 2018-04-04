@@ -31,7 +31,7 @@ resources:
 #  source:
 #    url: https://hooks.slack.com/services/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
 
-- name: source-code
+- name: refapp-account-java
   type: git
   source:
     uri: https://github.com/ECSTeam/refapp-account-java.git
@@ -39,18 +39,20 @@ resources:
 
 
 jobs:
-- name: build
+- name: compile-refapp-account
   max_in_flight: 1
   plan:
-  - get: source-code
+  - get: refapp-account-java
     trigger: true
   - task: compile
     file: refapp-account-java/ci/tasks/refapp-account/compile/task.yml
--name: release
+
+- name: cf-push-refapp-account
   serial: true
+  max_in_flight: 1
   plan:
-  - get: source-code
-    passed: [build]
+  - get: refapp-account-java
+    passed: [compile-refapp-account]
     trigger: true
   - task: cf-push
     file: refapp-account-java/ci/tasks/refapp-account/cf-push/task.yml
