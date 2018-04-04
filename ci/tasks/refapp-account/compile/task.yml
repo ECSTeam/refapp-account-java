@@ -10,4 +10,4 @@ inputs:
 outputs:
 - name: refapp-account-java-release
 run:
-  path: refapp-accou#!/bin/shnt-java/ci/tasks/refapp-account/compile/task.sh
+  path: refapp-account-java/ci/tasks/refapp-account/compile/task.sh
