@@ -9,7 +9,7 @@ inputs:
   #- name: refapp-account-java
   - name: refapp-account-java-release
 run:
-  path: refapp-gateway-java/ci/tasks/refapp-account/cf-push/task.sh
+  path: refapp-account-java/ci/tasks/refapp-account/cf-push/task.sh
 params:
   CF_API: ((CF_API))
   CF_API_USER: ((CF_API_USER))
