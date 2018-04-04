@@ -1,7 +1,7 @@
 #!/bin/sh
 
 mkdir -p refapp-account-java-release
-cd refapp-gateway-java
+cd refapp-account-java
 
 mvn package
 cp target/*.jar ../refapp-account-java-release/
