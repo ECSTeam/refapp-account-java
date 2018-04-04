@@ -1,4 +1,4 @@
-resource_types:
+#resource_types:
 #- name: slack-notification
 #  type: docker-image
 #  source:
@@ -6,41 +6,58 @@ resource_types:
 #    tag: latest
 
 resources:
-# source code for the pipeline scripts
-- name: refapp-account-java
-  type: git
-  source:
-    uri: https://github.com/ECSTeam/refapp-account-java.git
-    private_key: ((github_private_key))
+#- name: cf-release
+#  type: cf
+#  source:
+#    api: ((CF_API))
+#    username: ((CF_API_USER))
+#    password: ((CF_API_PASSWORD))
+#    organization: ((CF_ORG))
+#    space: ((CF_SPACE))
+#    skip_cert_check: true
+#- name: maven-resource
+#  type: docker-image
+#  source:
+#    repository: patrickcrocker/maven-resource
+#    tag: latest
+#- name: pipeline-tasks
+#  type: git
+#  source:
+#    uri: https://github.com/Pivotal-Field-Engineering/pipeline-tasks
+#    branch: master
 
 #- name: slack-alert
 #  type: slack-notification
 #  source:
 #    url: https://hooks.slack.com/services/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
 
+- name: source-code
+  type: git
+  source:
+    uri: https://github.com/ECSTeam/refapp-account-java.git
+    private_key: ((github_private_key))
+
+
 jobs:
-# refapp-account app pipeline
-- name: compile-refapp-account
+- name: build
   max_in_flight: 1
   plan:
-  - get: refapp-account-java
+  - get: source-code
     trigger: true
   - task: compile
     file: refapp-account-java/ci/tasks/refapp-account/compile/task.yml
-
-#- name: cf-push-refapp-account
-#  serial: true
-#  max_in_flight: 1
-#  plan:
-#  - get: refapp-account-java
-#    passed: [compile-refapp-account]
-#    trigger: true
-#  - task: cf-push
-#    file: refapp-account-java/ci/tasks/refapp-account/cf-push/task.yml
-#    attempts: 2
-#    params:
-#      CF_API: ((CF_API))
-#      CF_API_USER: ((CF_API_USER))
-#      CF_API_PASSWORD: ((CF_API_PASSWORD))
-#      CF_ORG: ((CF_ORG))
-#      CF_SPACE: ((CF_SPACE))
+-name: release
+  serial: true
+  plan:
+  - get: source-code
+    passed: [build]
+    trigger: true
+  - task: cf-push
+    file: refapp-account-java/ci/tasks/refapp-account/cf-push/task.yml
+    attempts: 2
+    params:
+      CF_API: ((CF_API))
+      CF_API_USER: ((CF_API_USER))
+      CF_API_PASSWORD: ((CF_API_PASSWORD))
+      CF_ORG: ((CF_ORG))
+      CF_SPACE: ((CF_SPACE))
