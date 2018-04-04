@@ -20,7 +20,7 @@ resources:
 
 jobs:
 # refapp-account app pipeline
-- name: compile-refapp-account
+- name: compile-and-push-refapp-account
   max_in_flight: 1
   plan:
   - get: refapp-account-java
@@ -28,13 +28,13 @@ jobs:
   - task: compile
     file: refapp-account-java/ci/tasks/refapp-account/compile/task.yml
 
-- name: cf-push-refapp-account
-  serial: true
-  max_in_flight: 1
-  plan:
-  - get: refapp-account-java-release
-    passed: [compile-refapp-account]
-    trigger: true
+#- name: cf-push-refapp-account
+#  serial: true
+#  max_in_flight: 1
+#  plan:
+#  #- get: refapp-account-java
+#    passed: [compile-refapp-account]
+#    #trigger: true
   - task: cf-push
     file: refapp-account-java/ci/tasks/refapp-account/cf-push/task.yml
     attempts: 2
