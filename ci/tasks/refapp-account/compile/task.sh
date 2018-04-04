@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 mkdir -p refapp-account-java-release
 cd refapp-gateway-java
