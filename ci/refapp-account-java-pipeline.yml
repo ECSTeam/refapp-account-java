@@ -18,6 +18,14 @@ resources:
 #  source:
 #    url: https://hooks.slack.com/services/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
 
+
+#- name: cf-push-refapp-account
+#  serial: true
+#  max_in_flight: 1
+#  plan:
+#  - get: refapp-account-java
+#    passed: [compile-and-push-refapp-account]
+#    trigger: true
 jobs:
 # refapp-account app pipeline
 - name: compile-and-push-refapp-account
@@ -27,15 +35,6 @@ jobs:
     trigger: true
   - task: compile
     file: refapp-account-java/ci/tasks/refapp-account/compile/task.yml
-
-#- name: cf-push-refapp-account
-#  serial: true
-#  max_in_flight: 1
-#  plan:
-#  #- get: refapp-account-java
-#    passed: [compile-refapp-account]
-#    #trigger: true
-
   - task: cf-push
     file: refapp-account-java/ci/tasks/refapp-account/cf-push/task.yml
     attempts: 2
@@ -47,8 +46,8 @@ jobs:
       CF_SPACE: ((CF_SPACE))
 
 - name: unit-tests-refapp-account
-  max_in_flight: 1
   plan:
   - get: refapp-account-java
     passed: [compile-and-push-refapp-account]
-    file: refapp-account-java/ci/tasks/refapp-account/unit-test/task.yml
+  - task: unittest
+    file: refapp-account-java/ci/task/refapp-account/unit-test/task.yml
