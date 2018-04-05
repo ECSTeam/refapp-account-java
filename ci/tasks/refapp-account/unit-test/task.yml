@@ -1,0 +1,11 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: maven
+    tag: latest
+inputs:
+- name: refapp-account-java
+run:
+  path: refapp-account-java/ci/tasks/refapp-account/unit-test/task.sh
