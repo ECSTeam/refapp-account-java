@@ -51,4 +51,4 @@ jobs:
     trigger: true
     passed: [compile-and-push-refapp-account]
   - task: unittest
-    file: refapp-account-java/ci/task/refapp-account/unit-test/task.yml
+    file: refapp-account-java/ci/tasks/refapp-account/unit-test/task.yml
